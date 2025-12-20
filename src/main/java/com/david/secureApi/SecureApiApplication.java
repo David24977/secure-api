@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SecureApiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SecureApiApplication.class, args);
+
+        SpringApplication.run(SecureApiApplication.class, args);
 	}
 
 }
