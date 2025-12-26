@@ -17,7 +17,7 @@ public class User {
     private UUID id;
     @Column(nullable = false, length = 30)
     private String username;
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false)
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -28,6 +28,6 @@ public class User {
     private Boolean accountNonLocked;
     //Cuando se creó el usuario
     private LocalDateTime createdAt;
-    //Cuando se actualizó
+    //Cuando se actualizó usuario
     private LocalDateTime updatedAt;
 }
