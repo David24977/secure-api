@@ -21,13 +21,25 @@ public class User {
     private String password;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private Role role;
+    private Role role = Role.USER;
     @Column(nullable = false)
-    private Boolean enabled;//Si está activo o no en ese momento
+    private Boolean enabled = false;//Si está activo o no en ese momento
     //Bloquear una cuenta
-    private Boolean accountNonLocked;
+    private Boolean accountNonLocked = true;
     //Cuando se creó el usuario
     private LocalDateTime createdAt;
     //Cuando se actualizó usuario
     private LocalDateTime updatedAt;
+
+    @PrePersist
+    public void onCreate() {
+        createdAt = LocalDateTime.now();
+        updatedAt = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
+
 }
