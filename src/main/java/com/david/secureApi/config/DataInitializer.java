@@ -8,25 +8,33 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-//@Configuration
+@Configuration
 public class DataInitializer {
 
-    //@Bean
-    CommandLineRunner initUsers(UserRepository userRepository,
-                                PasswordEncoder passwordEncoder) {
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
+    public DataInitializer(UserRepository userRepository,
+                            PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Bean
+    CommandLineRunner initAdmin() {
         return args -> {
+            if (userRepository.findByUsername("admin").isEmpty()) {
 
-            if (userRepository.findByUsername("user").isEmpty()) {
+                User admin = new User();
+                admin.setUsername("admin");
+                admin.setPassword(passwordEncoder.encode("admin123"));
+                admin.setRole(Role.ADMIN);
+                admin.setEnabled(true);
+                admin.setAccountNonLocked(true);
 
-                User user = new User();
-                user.setUsername("user");
-                user.setPassword(passwordEncoder.encode("1234"));
-                user.setRole(Role.USER);
-                user.setEnabled(true);
-
-                userRepository.save(user);
+                userRepository.save(admin);
             }
         };
     }
 }
+
